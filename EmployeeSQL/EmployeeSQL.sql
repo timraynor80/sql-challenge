@@ -1,3 +1,5 @@
+-- Import schema from quickdatabasediagrams.com
+
 CREATE TABLE Departments (
     Dept_No VARCHAR   NOT NULL,
     Dept_Name VARCHAR   NOT NULL,
@@ -69,3 +71,31 @@ REFERENCES Employees (Emp_No);
 
 ALTER TABLE Titles ADD CONSTRAINT fk_Titles_Emp_No FOREIGN KEY(Emp_No)
 REFERENCES Employees (Emp_No);
+
+-- DATA ANALYSIS --
+
+-- 1. List the following details of each employee: employee number, last name, first name, gender, and salary.
+
+SELECT employees.emp_no, employees.last_name, employees.first_name, employees.gender, salaries.salary 
+FROM Employees
+JOIN Salaries
+on employees.emp_no = salaries.emp_no
+ORDER BY emp_no;
+
+-- 2. List employees who were hired in 1986.
+
+SELECT hire_date, emp_no, last_name, first_name, gender, birth_date
+FROM Employees
+WHERE hire_date BETWEEN '1986-01-01' AND '1986-12-31'
+ORDER BY hire_date;
+
+-- 3. List the manager of each department with the following information: 
+--    department number, department name, the manager's employee number, last name, first name, and start and end employment dates.
+
+SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no, employees.last_name, employees.first_name, employees.hire_date, dept_manager.to_date
+FROM departments
+JOIN Dept_Manager
+ON Departments.dept_no = Dept_Manager.dept_no
+JOIN Employees
+ON dept_manager.emp_no = employees.emp_no
+ORDER BY dept_no;
