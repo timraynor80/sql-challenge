@@ -99,3 +99,13 @@ ON Departments.dept_no = Dept_Manager.dept_no
 JOIN Employees
 ON dept_manager.emp_no = employees.emp_no
 ORDER BY dept_no;
+
+-- 4. List the department of each employee with the following information: employee number, last name, first name, and department name.
+
+SELECT Employees.emp_no, Employees.last_name, Employees.first_name, Departments.dept_name
+FROM Employees
+JOIN Dept_Emp
+ON Employees.emp_no = Dept_Emp.emp_no
+JOIN Departments
+ON Departments.dept_no = Dept_Emp.Dept_no
+ORDER BY emp_no;
